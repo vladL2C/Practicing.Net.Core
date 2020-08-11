@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using Practice.API.Models;
 using Practice.API.Services;
+using Practice.API.Services.AnimalService;
 
 namespace Practice.API.Controllers
 {
@@ -10,27 +11,19 @@ namespace Practice.API.Controllers
     public class AnimalsController : ControllerBase
     {
 
-        private readonly IMongoCollection<Animal> _respository;
+        private readonly IAnimalService _animalService;
 
-        public AnimalsController(IMongoDbService<Animal> respository)
+        public AnimalsController(IAnimalService animalService)
         {
-            _respository = respository.GetCollection("animals");
+            _animalService = animalService;
         }
 
         [HttpGet]
         public ActionResult Get()
         {
-            var list = _respository.Find(animal => true).ToList();
+            var list = _animalService.FindAll();
             return new JsonResult(list);
         }
 
-        [HttpPost]
-        public ActionResult createAnimal(Animal animal)
-        {
-
-            _respository.InsertOne(animal);
-
-            return new JsonResult(animal);
-        }
     }
 }

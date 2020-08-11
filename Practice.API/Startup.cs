@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using Practice.API.Models;
 using Practice.API.Services;
+using Practice.API.Services.AnimalService;
 using System.Text.Json;
 
 namespace Practice.API
@@ -24,6 +25,7 @@ namespace Practice.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(typeof(IMongoDbService<>), typeof(MongoDbService<>));
+            services.AddScoped<IAnimalService, AnimalService>();
             services.AddControllers();
         }
 
